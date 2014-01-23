@@ -11,7 +11,7 @@ from touchforms.formplayer import sms as tfsms
 from django.conf import settings
 from xml.etree.ElementTree import XML, tostring
 from dimagi.utils.parsing import json_format_datetime
-from corehq.apps.receiverwrapper.util import get_submit_url
+from corehq.apps.receiverwrapper.util import get_submit_url, submit_form_locally
 from receiver.util import spoof_submission
 from couchforms.models import XFormInstance
 import re
@@ -155,7 +155,11 @@ def submit_unfinished_form(session_id, include_case_side_effects=False):
         cleaned_xml = tostring(root)
         
         # Submit the xml and end the session
-        resp = spoof_submission(get_submit_url(session.domain, session.app_id), cleaned_xml, hqsubmission=False)
+        resp = submit_form_locally(
+            instance=cleaned_xml,
+            domain=session.domain,
+            app_id=session,
+        )
         xform_id = resp['X-CommCareHQ-FormID']
         session.end(completed=False)
         session.submission_id = xform_id
