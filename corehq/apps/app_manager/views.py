@@ -67,7 +67,7 @@ from corehq.apps.domain.decorators import login_and_domain_required, login_or_di
 from corehq.apps.app_manager.models import Application, get_app, DetailColumn, Form, FormActions,\
     AppEditingError, load_case_reserved_words, ApplicationBase, DeleteFormRecord, DeleteModuleRecord, \
     DeleteApplicationRecord, str_to_cls, validate_lang, SavedAppBuild, ParentSelect, Module, CareplanModule, \
-    CareplanForm, CareplanGoalForm, CareplanTaskForm, CommTrackModule, CommTrackForm, CommTrackFormActions, ModuleNotFoundException
+    CareplanForm, CareplanGoalForm, CareplanTaskForm, AdvancedModule, AdvancedForm, AdvancedFormActions, ModuleNotFoundException
 from corehq.apps.app_manager.models import DETAIL_TYPES, import_app as import_app_util, SortElement
 from dimagi.utils.web import get_url_base
 from corehq.apps.app_manager.decorators import safe_download, no_conflict_require_POST
@@ -962,10 +962,7 @@ def undo_delete_app(request, domain, record_id):
 def delete_module(req, domain, app_id, module_id):
     "Deletes a module from an app"
     app = get_app(domain, app_id)
-    try:
-        record = app.delete_module(module_id)
-    except ModuleNotFoundException:
-        raise Http404()
+    record = app.delete_module(module_id)
     messages.success(req,
         'You have deleted a module. <a href="%s" class="post-link">Undo</a>' % reverse('undo_delete_module', args=[domain, record.get_id]),
         extra_tags='html'
