@@ -594,6 +594,10 @@ FLUFF_PILLOW_TYPES_TO_SQL = {
     'UnicefMalawiFluff': 'SQL',
     'MalariaConsortiumFluff': 'SQL',
     'CareSAFluff': 'SQL',
+    'OpmCaseFluff': 'SQL',
+    'OpmUserFluff': 'SQL',
+    'OpmFormFluff': 'SQL',
+    'OpmHealthStatusFluff': 'SQL',
 }
 
 PREVIEWER_RE = '^$'
@@ -941,6 +945,7 @@ PILLOWTOPS = {
         'custom.opm.opm_reports.models.OpmCaseFluffPillow',
         'custom.opm.opm_reports.models.OpmUserFluffPillow',
         'custom.opm.opm_reports.models.OpmFormFluffPillow',
+        'custom.opm.opm_reports.models.OpmHealthStatusFluffPillow',
         'custom.apps.cvsu.models.UnicefMalawiFluffPillow',
         'custom.reports.care_sa.models.CareSAFluffPillow',
         'custom.reports.mc.models.MalariaConsortiumFluffPillow',
@@ -982,6 +987,7 @@ ES_CASE_FULL_INDEX_DOMAINS = [
     'commtrack-public-demo',
     'uth-rhd-test',
     'crs-remind',
+    'opm',
 ]
 
 #Custom fully indexed domains for ReportXForm index/pillowtop --
